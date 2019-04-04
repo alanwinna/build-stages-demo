@@ -1,15 +1,18 @@
 sudo: true
 dist: trusty
-
 jobs:
   include:
-    - stage: build docker image
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t travis-ci-build-stages-demo .
-      - docker images
-      - docker tag travis-ci-build-stages-demo $DOCKER_USERNAME/travis-ci-build-stages-demo
-      - docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
-    - stage: test
-      script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt
-    - script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt
+  - stage: build docker image
+    script:
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    - docker build -t travis-ci-build-stages-demo .
+    - docker images
+    - docker tag travis-ci-build-stages-demo $DOCKER_USERNAME/travis-ci-build-stages-demo
+    - docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
+  - stage: test
+    script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt
+  - script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt
+env:
+  matrix:
+  - secure: OAPWdjUuMsqbSVNzlpjYqb75GdV8gdVTdQ3qHKuQg57HFKu1Ps2vldcARRmD2b3D6riNkTR+dbkspKkNdqDDSDuhXyIN+ZgfUWrSGuMGmlu5DC+XHWE2vfS5Pi1BVV3itaqqcceaxfWzmafpJkdb0Wd1ZwvO7kngKS4Av0HZ8/x32GO97kRJ+xxkKHQ0s1WQyMOPDK9nXDS6vdYpyBX/XStMxU6cv9Yn5d3IG6o7RU0F6QCghxcPxA1fdO4KfvMG9/1luzIqNVlOxSjK1lX9irGFwyJ3Q63Hr3FP6kz117kbId6HoYy6rHxX70Amxyw/QjXjWW05u8V4rGpETp0Dtjjd/l57cs4EBbBkb7sJAcdV8RlZ68Ui0qBG+4bCtlKK8lzk1z2eVhubKCsFfKeTjXmNsZSlQMg+LnPA3F43UCU2UoUT+hR/32vVLMwYCQpd0xilyzOef1W23mFFMDuBxQeG/2u/+re3q6FVi09daKsAeqKhjp16yq8YDq4+mo6d5Xa8q8XewcLbYgGZwWs6o2aIrb1qsXyLZOKQ0Fqt9q8I/BVXz3AMMrlpPsnB4pEAobXfcgrDTdslSC3rSDrJFun5a5FLf7CiVDpvUjtFsvXFRM/eM+oeKas4fZ6Zzpq5gbq4qZ0NimKrOsfkpUns+ZtDQNoVYgRnsHgkIvO0u1I=
+  - secure: eqTi9sQHc9iCLTyS+hjqsKHwGmKZMROOHOMOMWTdGvfRif7uiSWu4orDB+cQoKV0KxzOZpJyBBZI+zlPXAFP05HeuKzq7uBf0OwMdhaJkqRj2tZ/dQNd/ivdILKVvvIf47T37YutBk8o6NxHcIgyYEeEjarM6APWElPUbrFzRJLpSObnJ4/jh0DfJ1VZoJy9UD1gxjiqrDIVutWXzqx0iggvv8K5AHwssavopPBMOAIMbzUykZ+r7D1RzEpwbErqJ9DjQ9F185xEkBBEEHQw8ltGfMfbJ41kI0vJA7X+0nqOlB+Ir1G86l1n8NPuME3SZiS6iI/sDpaWGhJ7AnrackM4ygEvDiB4auVFUjVFldH66l986GVgStUOJZnV5HryxkuzZsCNThZbevbOGrTQOEA5SHVd3UAKWck8gEcrIi10EZ55YBi9tMCKst4bdmv1UPa2ipNuVtSm2zUwY4e6RWSzZiKprAxmeuq/BX3FDXLFF7teyoT38EiarGcn2PIZpLaZBe+WPNogNqXXyj0yY3djY0yITCK/R0ySxjAnXnUx4a82w3Es17bjhku+jsMkxSnFBkovOrVghrye9GJJMxX+nM4QfX5DB9V6Hzz6ShvxJEBWef3aIMsGXulbSseKCFwQ959qB33n+fFD/2cVcLGf9aauFVz+PqT8Rmtj9s8=
